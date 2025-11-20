@@ -137,7 +137,7 @@ header-includes:
 # Выводы
 В ходе выполнения работы, я освоила процедуры компиляции и сборки программ, написанных на ассемблере NASM.
 
-#Список литературы
+# Список литературы
 
 1. GDB: The GNU Project Debugger. — URL: https://www.gnu.org/software/gdb/.
 2. GNU Bash Manual. — 2016. — URL: https://www.gnu.org/software/bash/manual/.
