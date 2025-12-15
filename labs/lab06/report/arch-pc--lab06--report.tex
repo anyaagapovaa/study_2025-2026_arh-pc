@@ -1,0 +1,668 @@
+% Options for packages loaded elsewhere
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  english,
+  russian,
+  12pt,
+  a4paper,
+  DIV=11,
+  numbers=noendperiod]{scrreprt}
+\usepackage{xcolor}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{5}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage{setspace}
+% Make \paragraph and \subparagraph free-standing
+\makeatletter
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}{
+    \@ifstar
+      \xxxParagraphStar
+      \xxxParagraphNoStar
+  }
+  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
+  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}{
+    \@ifstar
+      \xxxSubParagraphStar
+      \xxxSubParagraphNoStar
+  }
+  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
+  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+\makeatother
+
+
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+
+
+
+\ifLuaTeX
+\usepackage[bidi=basic,provide=*]{babel}
+\else
+\usepackage[bidi=default,provide=*]{babel}
+\fi
+% get rid of language-specific shorthands (see #6817):
+\let\LanguageShortHands\languageshorthands
+\def\languageshorthands#1{}
+
+
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+
+
+ 
+\usepackage[backend=biber,langhook=extras,autolang=other*]{biblatex}
+\addbibresource{bib/cite.bib}
+
+\usepackage[]{csquotes}
+
+\usepackage{indentfirst}
+\usepackage{float}
+\floatplacement{figure}{H}
+\IfFileExists{plex-otf.sty}{
+  %% Full TeXlive
+  \usepackage[math,RM={Scale=0.94},SS={Scale=0.94},SScon={Scale=0.94},TT={Scale=MatchLowercase,FakeStretch=0.9},DefaultFeatures={Ligatures=Common}]{plex-otf}
+}{
+  %% TinyTeX
+  \usepackage{libertine}
+}
+\KOMAoption{captions}{tableheading}
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Содержание}
+\else
+  \newcommand\contentsname{Содержание}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{Список иллюстраций}
+\else
+  \newcommand\listfigurename{Список иллюстраций}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{Список таблиц}
+\else
+  \newcommand\listtablename{Список таблиц}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Рисунок}
+\else
+  \newcommand\figurename{Рисунок}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Таблица}
+\else
+  \newcommand\tablename{Таблица}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Список}
+\newcommand*\listoflistings{\listof{codelisting}{Листинги}}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Отчёт по лабораторной работе №6},
+  pdfauthor={Агапова Анна Антоновна},
+  pdflang={ru-RU},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+
+\title{Отчёт по лабораторной работе №6}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{Архитектура компьютера}
+\author{Агапова Анна Антоновна}
+\date{}
+\begin{document}
+\maketitle
+
+\renewcommand*\contentsname{Содержание}
+{
+\setcounter{tocdepth}{1}
+\tableofcontents
+}
+\listoffigures
+\listoftables
+
+\setstretch{1.5}
+\chapter{Цель
+работы}\label{ux446ux435ux43bux44c-ux440ux430ux431ux43eux442ux44b}
+
+Освоение арифметических инструкций языка ассемблера NASM.
+
+\chapter{Выполнение лабораторной
+работы}\label{ux432ux44bux43fux43eux43bux43dux435ux43dux438ux435-ux43bux430ux431ux43eux440ux430ux442ux43eux440ux43dux43eux439-ux440ux430ux431ux43eux442ux44b}
+
+1.Создаю каталог для программам лабораторной работы № 6, перехожу в него
+и создаю файл lab6-1.asm. (рис. \ref{fig-001})
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.6\linewidth,height=\textheight,keepaspectratio]{image/p1.png}
+
+}
+
+\caption{\label{fig-001}Создание каталога и файла}
+
+\end{figure}%
+
+2.Ввожу в файл lab6-1.asm текст программы из листинга 6.1. (рис.
+\ref{fig-002})
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.6\linewidth,height=\textheight,keepaspectratio]{image/p2.png}
+
+}
+
+\caption{\label{fig-002}Ввод текста программы}
+
+\end{figure}%
+
+3.Создаю исполняемый файл и запускаю его. (рис. \ref{fig-003})
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.6\linewidth,height=\textheight,keepaspectratio]{image/p3.png}
+
+}
+
+\caption{\label{fig-003}Запуск исполняемого файла}
+
+\end{figure}%
+
+4.Далее изменю текст программы и вместо символов, запишу в регистры
+числа. (рис. \ref{fig-004})
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.6\linewidth,height=\textheight,keepaspectratio]{image/p4.png}
+
+}
+
+\caption{\label{fig-004}Исправление текста программы}
+
+\end{figure}%
+
+5.Создаю исполняемый файл и запускаю его. (рис. \ref{fig-005})
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.6\linewidth,height=\textheight,keepaspectratio]{image/p5.png}
+
+}
+
+\caption{\label{fig-005}Запуск исполняемого файла}
+
+\end{figure}%
+
+6.Создаю файл lab6-2.asm в каталоге \textasciitilde/work/arch-pc/lab06 и
+проверяю его наличие. (рис. \ref{fig-006})
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.6\linewidth,height=\textheight,keepaspectratio]{image/p6.png}
+
+}
+
+\caption{\label{fig-006}Создание файла}
+
+\end{figure}%
+
+7.Ввожу в созданный файл текст программы из листинга 6.2. (рис.
+\ref{fig-007})
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.6\linewidth,height=\textheight,keepaspectratio]{image/p7.png}
+
+}
+
+\caption{\label{fig-007}Ввод текста программы}
+
+\end{figure}%
+
+8.Создаю исполняемый файл и запускаю его. (рис. \ref{fig-008})
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.6\linewidth,height=\textheight,keepaspectratio]{image/p8.png}
+
+}
+
+\caption{\label{fig-008}Запуск исполняемого файла}
+
+\end{figure}%
+
+9.Аналогично предыдущему примеру изменю символы на числа. (рис.
+\ref{fig-009})
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.6\linewidth,height=\textheight,keepaspectratio]{image/p9.png}
+
+}
+
+\caption{\label{fig-009}Изменение текста программы}
+
+\end{figure}%
+
+10.Создаю исполняемый файл и запускаю его. (рис. \ref{fig-0010})
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.6\linewidth,height=\textheight,keepaspectratio]{image/p10.png}
+
+}
+
+\caption{\label{fig-0010}Запуск исполняемого файла}
+
+\end{figure}%
+
+11.Заменю функцию iprintLF на iprint. (рис. \ref{fig-0011})
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.6\linewidth,height=\textheight,keepaspectratio]{image/p11.png}
+
+}
+
+\caption{\label{fig-0011}Изменение текста программы}
+
+\end{figure}%
+
+12.Создаю исполняемый файл и запускаю его. (рис. \ref{fig-0012})
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.6\linewidth,height=\textheight,keepaspectratio]{image/p12.png}
+
+}
+
+\caption{\label{fig-0012}Запуск исполняемого файла}
+
+\end{figure}%
+
+13.Создаю файл lab6-3.asm в каталоге \textasciitilde/work/arch-pc/lab06
+и проверяю его наличие. (рис. \ref{fig-0013})
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.6\linewidth,height=\textheight,keepaspectratio]{image/p13.png}
+
+}
+
+\caption{\label{fig-0013}Создание файла}
+
+\end{figure}%
+
+14.Внимательно изучаю текст программы из листинга 6.3 и ввожу в
+lab6-3.asm для вычисления арифметического выражения 𝑓(𝑥) = (5 ∗ 2 +
+3)/3. (рис. \ref{fig-0014})
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.6\linewidth,height=\textheight,keepaspectratio]{image/p14.png}
+
+}
+
+\caption{\label{fig-0014}Ввод текста программы}
+
+\end{figure}%
+
+15.Создаю исполняемый файл и запускаю его. (рис. \ref{fig-0015})
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.6\linewidth,height=\textheight,keepaspectratio]{image/p15.png}
+
+}
+
+\caption{\label{fig-0015}Запуск исполняемого файла}
+
+\end{figure}%
+
+16.Меняю текст программы для вычисления выражения 𝑓(𝑥) = (4 ∗ 6 + 2)/5.
+(рис. \ref{fig-0016})
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.6\linewidth,height=\textheight,keepaspectratio]{image/p16.png}
+
+}
+
+\caption{\label{fig-0016}Изменение текста программы}
+
+\end{figure}%
+
+17.Создаю исполняемый файл и запускаю его. (рис. \ref{fig-0017})
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.6\linewidth,height=\textheight,keepaspectratio]{image/p17.png}
+
+}
+
+\caption{\label{fig-0017}Запуск исполняемого файла}
+
+\end{figure}%
+
+18.Создаю файл variant.asm в каталоге \textasciitilde/work/arch-pc/lab06
+и проверяю его наличие. (рис. \ref{fig-0018})
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.6\linewidth,height=\textheight,keepaspectratio]{image/p18.png}
+
+}
+
+\caption{\label{fig-0018}Создание файла}
+
+\end{figure}%
+
+19.Внимательно изучаю текст программы из листинга 6.4 и ввожу в файл
+variant.asm. (рис. \ref{fig-0019})
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.6\linewidth,height=\textheight,keepaspectratio]{image/p19.png}
+
+}
+
+\caption{\label{fig-0019}Ввод текста программы}
+
+\end{figure}%
+
+20.Создаю исполняемый файл и запускаю его. (рис. \ref{fig-0020})
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.6\linewidth,height=\textheight,keepaspectratio]{image/p20.png}
+
+}
+
+\caption{\label{fig-0020}Запуск исполняемого файла}
+
+\end{figure}%
+
+\chapter{Ответы на
+вопросы}\label{ux43eux442ux432ux435ux442ux44b-ux43dux430-ux432ux43eux43fux440ux43eux441ux44b}
+
+1.За вывод сообщения \enquote{Ваш вариант} отвечают строки кода:
+
+mov eax,rem
+
+call sprint
+
+2.Инструкция mov ecx, x используется, чтобы поместить адрес вводимой
+строки x в регистр ecx, mov edx, 80 - задаёт максимальную длину ввода,
+call sread - вызывает функцию чтения строки с клавиатуры.
+
+3.call atoi используется для преобразования строки ASCII-коды в число и
+записывает результат в eax.
+
+4.За вычисления варианта отвечают строки:
+
+xor edx,edx
+
+mov ebx,20
+
+div ebx
+
+inc edx
+
+5.Остаток записывается в регистр edx.
+
+6.inc edx используется для увелечения остатка на 1.
+
+7.За вывод на экран результатов вычислений отвечают строки:
+
+mov eax,rem
+
+call sprint
+
+mov eax,edx
+
+call iprintLf
+
+\chapter{Задание для самостоятельной
+работы}\label{ux437ux430ux434ux430ux43dux438ux435-ux434ux43bux44f-ux441ux430ux43cux43eux441ux442ux43eux44fux442ux435ux43bux44cux43dux43eux439-ux440ux430ux431ux43eux442ux44b}
+
+1.Создаю файл lab6-4.asm в каталоге \textasciitilde/work/arch-pc/lab06 и
+проверяю его наличие. (рис. \ref{fig-0021})
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.6\linewidth,height=\textheight,keepaspectratio]{image/p21.png}
+
+}
+
+\caption{\label{fig-0021}Создание файла}
+
+\end{figure}%
+
+2.Ввожу в созданный файл программу для вычисления арифметического
+выражения, которое указано в 14 варианте. (рис. \ref{fig-0022})
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.6\linewidth,height=\textheight,keepaspectratio]{image/p22.png}
+
+}
+
+\caption{\label{fig-0022}Ввод текста программы}
+
+\end{figure}%
+
+3.Создаю исполняемый файл и запускаю его для x1=1. (рис. \ref{fig-0023})
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.6\linewidth,height=\textheight,keepaspectratio]{image/p23.png}
+
+}
+
+\caption{\label{fig-0023}Запуск исполняемого файла}
+
+\end{figure}%
+
+4.Создаю исполняемый файл и запускаю его для x2=4. (рис. \ref{fig-0024})
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.6\linewidth,height=\textheight,keepaspectratio]{image/p24.png}
+
+}
+
+\caption{\label{fig-0024}Запуск исполняемого файла}
+
+\end{figure}%
+
+\chapter{Выводы}\label{ux432ux44bux432ux43eux434ux44b}
+
+При выполнении данной лабораторной работы я освоила арифметические
+инструкции языка ассемблера NASM.
+
+\chapter{Список
+литературы}\label{ux441ux43fux438ux441ux43eux43a-ux43bux438ux442ux435ux440ux430ux442ux443ux440ux44b}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  GDB: The GNU Project Debugger. --- URL:
+  https://www.gnu.org/software/gdb/.
+\item
+  GNU Bash Manual. --- 2016. --- URL:
+  https://www.gnu.org/software/bash/manual/.
+\item
+  Midnight Commander Development Center. --- 2021. --- URL:
+  https://midnight-commander. org/.
+\item
+  NASM Assembly Language Tutorials. --- 2021. --- URL:
+  https://asmtutor.com/.
+\item
+  Newham C. Learning the bash Shell: Unix Shell Programming. ---
+  O'Reilly Media, 2005. --- 354 с. --- (In a Nutshell). --- ISBN
+  0596009658. --- URL:
+  http://www.amazon.com/Learningbash-Shell-Programming-Nutshell/dp/0596009658.
+\item
+  Robbins A. Bash Pocket Reference. --- O'Reilly Media, 2016. --- 156 с.
+  --- ISBN 978-1491941591.
+\item
+  The NASM documentation. --- 2021. --- URL:
+  https://www.nasm.us/docs.php.
+\item
+  Zarrelli G. Mastering Bash. --- Packt Publishing, 2017. --- 502 с. ---
+  ISBN 9781784396879.
+\item
+  Колдаев В. Д., Лупин С. А. Архитектура ЭВМ. --- М. : Форум, 2018.
+\item
+  Куляс О. Л., Никитин К. А. Курс программирования на ASSEMBLER. --- М.
+  : Солон-Пресс,
+\item
+\item
+  Новожилов О. П. Архитектура ЭВМ и систем. --- М. : Юрайт, 2016.
+\item
+  Расширенный ассемблер: NASM. --- 2021. --- URL:
+  https://www.opennet.ru/docs/RUS/nasm/.
+\item
+  Робачевский А., Немнюгин С., Стесик О. Операционная система UNIX. ---
+  2-е изд. --- БХВПетербург, 2010. --- 656 с. --- ISBN
+  978-5-94157-538-1.
+\item
+  Столяров А. Программирование на языке ассемблера NASM для ОС Unix. ---
+  2-е изд. --- М. : МАКС Пресс, 2011. --- URL:
+  http://www.stolyarov.info/books/asm\_unix.
+\item
+  Таненбаум Э. Архитектура компьютера. --- 6-е изд. --- СПб. : Питер,
+  2013. --- 874 с. --- (Классика Computer Science).
+\item
+  Таненбаум Э., Бос Х. Современные операционные системы. --- 4-е изд.
+  --- СПб. : Питер,2015. --- 1120 с. --- (Классика Computer Science).
+\end{enumerate}
+
+
+\printbibliography
+
+
+
+\end{document}
